@@ -8,13 +8,15 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { BodyDirective } from './directives/body.directive';
+import { SignupPageComponent } from './components/signup-page/signup-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageHeaderComponent,
     LoginPageComponent,
-    BodyDirective
+    BodyDirective,
+    SignupPageComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import { BodyDirective } from './directives/body.directive';
     MatToolbarModule,
     BrowserAnimationsModule
   ],
-  entryComponents: [AppComponent, LoginPageComponent],
+  entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

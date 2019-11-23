@@ -16,8 +16,13 @@ export class PageHeaderComponent implements OnInit {
   }
 
   @Output() loginClick: EventEmitter<any> = new EventEmitter();
+  @Output() signupClick: EventEmitter<any> = new EventEmitter();
 
   showLogin() {
     this.loginClick.emit(null);
+  }
+
+  showSignup() {
+    this.signupClick.emit(null);
   }
 }
