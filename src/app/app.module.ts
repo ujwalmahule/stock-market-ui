@@ -6,11 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { BodyDirective } from './directives/body.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    LoginPageComponent,
+    BodyDirective
   ],
   imports: [
     BrowserModule,
@@ -18,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatToolbarModule,
     BrowserAnimationsModule
   ],
+  entryComponents: [AppComponent, LoginPageComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

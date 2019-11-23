@@ -4,8 +4,8 @@
 
         <span class="toolbar-spacer"></span>
         <div *ngIf="!currentUser; else logout" class="toolbar-button-row">
-        <button mat-stroked-button [routerLink]="['/login']">Login</button>
-        <button mat-stroked-button [routerLink]="['/signup']">SignUp</button>
+        <button mat-stroked-button (click)="showLogin()">Login</button>
+        <button mat-stroked-button (click)="showSignup()">SignUp</button>
         </div>
         <ng-template #logout>
         <span class="user-name">{{ currentUser.username }}</span>
