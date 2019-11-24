@@ -27,6 +27,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { BodyDirective } from './directives/body.directive';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,

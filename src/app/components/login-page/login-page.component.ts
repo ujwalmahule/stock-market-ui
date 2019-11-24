@@ -1,6 +1,7 @@
 import { BodyComponent } from './../../interfaces/body-component';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -14,14 +15,13 @@ export class LoginPageComponent implements OnInit, BodyComponent {
   loading = false;
   submitted = false;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
-    console.log("initialized");
   }
 
   hasError = (controlName: string, errorName: string) => {
@@ -30,8 +30,11 @@ export class LoginPageComponent implements OnInit, BodyComponent {
 
   login() {
     this.loading = true;
-    console.log("OK");
-    
+    let api = this.http.get("http://localhost:8181/user-service",{responseType: 'text'});
+    api.subscribe((response) => {
+      console.log("got response from api" + response);
+      this.loading = false;
+    });
   }
 
 }
