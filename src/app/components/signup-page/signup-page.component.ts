@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { BodyComponent } from './../../interfaces/body-component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, FormControl } from '@angular/forms';
@@ -34,7 +35,7 @@ export class SignupPageComponent implements OnInit, BodyComponent {
 
   signup(data : SignupFormModel) {
     this.loading = true;
-    let api = this.http.post("http://localhost:8181/user-service/signup", data);
+    let api = this.http.post(`${environment.gatewayUrl}/user-service/signup`, data);
     api.subscribe(
       (response) => {this.snackbar.open("We have emailed you the activation link, please check your email.")},
       (error) => {

@@ -1,6 +1,8 @@
 import { Component, OnInit, ComponentFactoryResolver, Output, EventEmitter } from '@angular/core';
 import { LoginPageComponent } from '../login-page/login-page.component';
 import { BodyDirective } from 'src/app/directives/body.directive';
+import { User } from 'src/app/auth/model/user';
+import { AuthenticationService } from 'src/app/auth/service/authentication.service';
 
 @Component({
   selector: 'page-header',
@@ -9,7 +11,11 @@ import { BodyDirective } from 'src/app/directives/body.directive';
 })
 export class PageHeaderComponent implements OnInit {
 
-  constructor() { }
+  currentUser: User;
+
+  constructor(private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+   }
 
   ngOnInit() {
     
@@ -24,5 +30,10 @@ export class PageHeaderComponent implements OnInit {
 
   showSignup() {
     this.signupClick.emit(null);
+  }
+
+  doLogout() {
+    console.log("logout called")
+    this.authenticationService.logout();
   }
 }
