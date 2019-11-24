@@ -23,11 +23,11 @@
                         <mat-error *ngIf="hasError('email', 'required')">You must enter email</mat-error>  
                         <mat-error *ngIf="hasError('email', 'email')">Enter a valid email</mat-error>  
                     </mat-form-field>
+                    <mat-error *ngIf="signupError">{{ this.errorMessage }}</mat-error>  
                 </div>
         </mat-card-content>    
         <mat-card-actions class="actions">
-            <button type="submit" [disabled]="!signupForm.valid || loading" mat-stroked-button color="primary">Signup</button>
-            <mat-error *ngIf="signupError">Unable to create new user, please try after some time</mat-error>  
+            <button type="submit" [disabled]="!signupForm.valid || loading" mat-stroked-button color="primary">Signup</button>            
         </mat-card-actions>
     </mat-card>
 </form>

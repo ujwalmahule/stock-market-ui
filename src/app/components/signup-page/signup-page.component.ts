@@ -17,6 +17,7 @@ export class SignupPageComponent implements OnInit, BodyComponent {
   matcher: ErrorStateMatcher;
   loading = false;
   signupError = false;
+  errorMessage: String;
   data: SignupFormModel;
 
   constructor(private fb : FormBuilder, private http: HttpClient, private snackbar : MatSnackBar) { }
@@ -36,7 +37,15 @@ export class SignupPageComponent implements OnInit, BodyComponent {
     let api = this.http.post("http://localhost:8181/user-service/signup", data);
     api.subscribe(
       (response) => {this.snackbar.open("We have emailed you the activation link, please check your email.")},
-      (error) => {this.signupError = true; this.loading = false;}
+      (error) => {
+          this.signupError = true; 
+          this.loading = false; 
+          if(error.error && error.error.message) {
+            this.errorMessage = error.error.message;
+          } else {
+            this.errorMessage = "Error creating user, please try again after some time."
+          }
+      }
     );
   }
 
