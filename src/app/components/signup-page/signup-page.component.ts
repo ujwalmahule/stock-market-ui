@@ -1,8 +1,10 @@
 import { BodyComponent } from './../../interfaces/body-component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, FormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { HttpClient } from '@angular/common/http';
+import { SignupFormModel } from 'src/app/model/signup-form-model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup-page',
@@ -14,8 +16,10 @@ export class SignupPageComponent implements OnInit, BodyComponent {
   signupForm: FormGroup;
   matcher: ErrorStateMatcher;
   loading = false;
+  signupError = false;
+  data: SignupFormModel;
 
-  constructor(private fb : FormBuilder, private http: HttpClient) { }
+  constructor(private fb : FormBuilder, private http: HttpClient, private snackbar : MatSnackBar) { }
 
   ngOnInit() {
     this.matcher = new MyErrorStateMatcher();
@@ -27,8 +31,13 @@ export class SignupPageComponent implements OnInit, BodyComponent {
     }, {validator: this.confirmPass});
   }
 
-  signup() {
+  signup(data : SignupFormModel) {
     this.loading = true;
+    let api = this.http.post("http://localhost:8181/user-service/signup", data);
+    api.subscribe(
+      (response) => {this.snackbar.open("We have emailed you the activation link, please check your email.")},
+      (error) => {this.signupError = true; this.loading = false;}
+    );
   }
 
   hasError = (controlName: string, errorName: string) => {
