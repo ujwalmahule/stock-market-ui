@@ -28,6 +28,8 @@ import { BodyDirective } from './directives/body.directive';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminViewComponent } from './components/admin-view/admin-view.component';
+import { UserViewComponent } from './components/user-view/user-view.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { HttpClientModule } from '@angular/common/http';
     PageHeaderComponent,
     LoginPageComponent,
     BodyDirective,
-    SignupPageComponent
+    SignupPageComponent,
+    AdminViewComponent,
+    UserViewComponent
   ],
   imports: [
     BrowserModule,

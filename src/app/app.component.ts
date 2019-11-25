@@ -31,6 +31,10 @@ export class AppComponent implements OnDestroy {
     this.showComponentAppBody(SignupPageComponent);
   }
 
+  showLogin() {
+    this.showComponentAppBody(LoginPageComponent);
+  }
+
   showComponentAppBody(component : BodyComponent) {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(<any>component);
     const viewContainerRef = this.appBody.viewContainerRef;

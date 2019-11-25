@@ -50,6 +50,7 @@ export class LoginPageComponent implements OnInit, BodyComponent, OnDestroy {
       .subscribe(
         data => {
           //login success
+          this.loading = false;
           this.loginForm.reset();
         },
         error => {
