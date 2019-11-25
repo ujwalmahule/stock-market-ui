@@ -1,2 +1,6 @@
 <page-header (loginClick)="showLogin()" (signupClick)="showSignup()"></page-header>
+<div *ngIf="currentUser"> user logged in Type:
+    <div *ngIf="currentUser.userType==0">Admin</div>
+    <div *ngIf="currentUser.userType==1">User</div>
+</div>
 <div class="body"><ng-template appBody></ng-template></div>

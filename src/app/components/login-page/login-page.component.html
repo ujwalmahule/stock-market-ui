@@ -1,3 +1,4 @@
+<div *ngIf="!currentUser">
 <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="login(loginForm.value)" fxLayout="column wrap"
         fxLayoutAlign="center center" fxLayoutGap="10px">
     <mat-card>
@@ -20,3 +21,4 @@
         </mat-card-actions>
     </mat-card>
 </form>
+</div>
