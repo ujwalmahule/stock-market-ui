@@ -30,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminViewComponent } from './components/admin-view/admin-view.component';
 import { UserViewComponent } from './components/user-view/user-view.component';
+import { ImportDataComponent } from './components/import-data/import-data.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { UserViewComponent } from './components/user-view/user-view.component';
     BodyDirective,
     SignupPageComponent,
     AdminViewComponent,
-    UserViewComponent
+    UserViewComponent,
+    ImportDataComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,7 @@ import { UserViewComponent } from './components/user-view/user-view.component';
     MatDialogModule,
     MatGridListModule,
     MatProgressSpinnerModule,
-    MatCardModule,
+    MatCardModule
   ],
   entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent],
   providers: [],
