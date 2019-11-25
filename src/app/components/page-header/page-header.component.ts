@@ -39,7 +39,7 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogout() {
-    console.log("logout called")
     this.authenticationService.logout();
+    this.loginClick.emit(null);
   }
 }
