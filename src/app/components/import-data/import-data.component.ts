@@ -1,3 +1,4 @@
+import { FileUploadResponse } from './../../model/file-upload-response';
 import { Component, OnInit } from '@angular/core';
 import { FormGroupDirective, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -32,14 +33,14 @@ export class ImportDataComponent implements OnInit {
 
     let data = new FormData(); 
     data.append('file', this.fileToUpload, this.fileToUpload.name); 
-    console.log(data);
-
+    
     let api = this.http.post(`${environment.gatewayUrl}/upload-service`, data);
     api.subscribe(
-      (response) => {
-        console.log("todo display results");
-        console.log(response);
+      (response : FileUploadResponse) => {
         this.loading = false;
+        this.snackbar.open(response.message, 'Close', {
+          duration: 3000
+        });
       },
       (error) => {
           let errorMessage: string;
@@ -48,7 +49,6 @@ export class ImportDataComponent implements OnInit {
             errorMessage = "Error:" + error.error.message;
           } else {
             errorMessage = "Error occured while uploading, please try again after some time.";
-            console.log(error);
           }
           this.snackbar.open(errorMessage);
       }
