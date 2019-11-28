@@ -18,6 +18,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatPaginatorModule} from '@angular/material/paginator'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +33,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminViewComponent } from './components/admin-view/admin-view.component';
 import { UserViewComponent } from './components/user-view/user-view.component';
 import { ImportDataComponent } from './components/import-data/import-data.component';
+import { UploadStatusComponent } from './components/upload-status/upload-status.component';
+import {MatTableModule} from '@angular/material/table';
+import { UploadStatusDialogComponent } from './component/upload-status-dialog/upload-status-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -41,7 +46,9 @@ import { ImportDataComponent } from './components/import-data/import-data.compon
     SignupPageComponent,
     AdminViewComponent,
     UserViewComponent,
-    ImportDataComponent
+    ImportDataComponent,
+    UploadStatusComponent,
+    UploadStatusDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +74,12 @@ import { ImportDataComponent } from './components/import-data/import-data.compon
     MatDialogModule,
     MatGridListModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
-  entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent],
+  entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent, UploadStatusDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
