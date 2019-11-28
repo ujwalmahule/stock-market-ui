@@ -28,7 +28,7 @@ export class UploadStatusComponent implements OnInit, AfterViewInit {
   }
 
   detailsOf(row) {
-    this.dialog.open(UploadStatusDialogComponent, {width:'400px', data:row});
+    this.dialog.open(UploadStatusDialogComponent, {width:'450px', data:row});
   }
 
   refresh() {
