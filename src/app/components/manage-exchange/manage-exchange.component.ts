@@ -62,7 +62,7 @@ export class ManageExchangeComponent implements OnInit, AfterViewInit{
     );
   }
 
-  detailsOf(row?: ExchangeModel) {
+  detailsOf(row: ExchangeModel) {
     let ref = this.dialog.open(ExchangeEditorDialogComponent, {width:'500px', data:row});
     ref.afterClosed().subscribe(() => {
       this.refresh();
