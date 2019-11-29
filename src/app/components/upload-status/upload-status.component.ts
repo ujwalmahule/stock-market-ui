@@ -1,4 +1,4 @@
-import { UploadStatusDialogComponent } from './../../component/upload-status-dialog/upload-status-dialog.component';
+import { UploadStatusDialogComponent } from '../upload-status-dialog/upload-status-dialog.component';
 import { FileStatusModel } from './../../model/file-status-model';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
