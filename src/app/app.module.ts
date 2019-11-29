@@ -37,7 +37,8 @@ import { UploadStatusComponent } from './components/upload-status/upload-status.
 import {MatTableModule} from '@angular/material/table';
 import { UploadStatusDialogComponent } from './components/upload-status-dialog/upload-status-dialog.component';
 import { ManageCompanyComponent } from './components/manage-company/manage-company.component';
-import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component'; 
+import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component';
+import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component'; 
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ManageExchangeComponent } from './components/manage-exchange/manage-exc
     UploadStatusComponent,
     UploadStatusDialogComponent,
     ManageCompanyComponent,
-    ManageExchangeComponent
+    ManageExchangeComponent,
+    ManageIpoComponent
   ],
   imports: [
     BrowserModule,
