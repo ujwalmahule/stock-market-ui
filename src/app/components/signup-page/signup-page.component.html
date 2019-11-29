@@ -5,6 +5,7 @@
         </mat-card-title>
         <mat-card-content>
                 <div class="main-container">
+                    <input type="hidden" formControlName="id" id="id">
                     <mat-form-field>
                         <input matInput placeholder="Enter username" formControlName="username" id="username" required>
                         <mat-error *ngIf="hasError('username', 'required')">You must enter a email</mat-error>            

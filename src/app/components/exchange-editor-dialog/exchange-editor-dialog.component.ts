@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ExchangeModel } from './../../model/exchange-model';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-exchange-editor-dialog',
@@ -13,9 +16,14 @@ export class ExchangeEditorDialogComponent implements OnInit {
   newExchange: boolean = false
   editMode: boolean = false
   editorForm: FormGroup 
+  loading = false
+  exchangeId: number
 
-  constructor(private fb : FormBuilder, private dialogRef: MatDialogRef<ExchangeEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ExchangeModel) { }
+  constructor(private fb : FormBuilder, 
+              private http: HttpClient, 
+              private snackbar : MatSnackBar,
+              private dialogRef: MatDialogRef<ExchangeEditorDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: ExchangeModel) { }
 
   ngOnInit() {
     if(this.data == null) {
@@ -24,6 +32,7 @@ export class ExchangeEditorDialogComponent implements OnInit {
     }
 
     this.editorForm = this.fb.group({
+      id:[''],
       code:['', Validators.required],
       brief:['', Validators.required],
       address:['', Validators.required],
@@ -31,6 +40,8 @@ export class ExchangeEditorDialogComponent implements OnInit {
     })
 
     if(!this.newExchange) {
+      this.exchangeId = this.data.id;
+      this.editorForm.get('id').setValue(this.data.id);
       this.editorForm.get('code').setValue(this.data.code);
       this.editorForm.get('brief').setValue(this.data.brief);
       this.editorForm.get('address').setValue(this.data.address);
@@ -43,11 +54,49 @@ export class ExchangeEditorDialogComponent implements OnInit {
   }
 
   createNewExchange() {
-
+    this.loading = true;
+    let api = this.http.post(`${environment.gatewayUrl}/stock-market-service/stock-exchange/`, this.editorForm.value);
+    api.subscribe(
+      (response) => {
+        this.loading=false;
+        this.snackbar.open("Exchange created.")
+        this.editorForm.reset();
+        this.cancel();
+      },
+      (error) => {
+          let errorMessage: string
+          this.loading = false; 
+          if(error.error && error.error.message) {
+            errorMessage = "Error:" + error.error.message;
+          } else {
+            errorMessage = "Error occured while creating new exchange."
+          }
+          this.snackbar.open(errorMessage);
+      }
+    );
   }
 
   updateExchange() {
-
+    this.loading = true;
+    let api = this.http.put(`${environment.gatewayUrl}/stock-market-service/stock-exchange/`+this.exchangeId, this.editorForm.value);
+    api.subscribe(
+      (response) => {
+        this.loading=false;
+        this.snackbar.open("Exchange details updated.")
+        this.editorForm.reset();
+        this.cancel();
+      },
+      (error) => {
+          let errorMessage: string
+          this.loading = false; 
+          if(error.error && error.error.message) {
+            errorMessage = "Error:" + error.error.message;
+          } else {
+            errorMessage = "Error occured while updating exchange details."
+          }
+          this.snackbar.open(errorMessage);
+      }
+    );
   }
 
   performAction() {
