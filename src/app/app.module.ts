@@ -39,6 +39,7 @@ import { UploadStatusDialogComponent } from './components/upload-status-dialog/u
 import { ManageCompanyComponent } from './components/manage-company/manage-company.component';
 import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component';
 import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component
     MatCardModule,
     MatExpansionModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatTooltipModule
   ],
   entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent, UploadStatusDialogComponent],
   providers: [],

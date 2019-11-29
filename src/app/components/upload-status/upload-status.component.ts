@@ -1,6 +1,7 @@
+import { FileStatusResponse } from './../../model/file-status-response';
 import { UploadStatusDialogComponent } from '../upload-status-dialog/upload-status-dialog.component';
 import { FileStatusModel } from './../../model/file-status-model';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, getModuleFactory } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
@@ -15,7 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class UploadStatusComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['fileName', 'status', 'details'];
+  data: FileStatusModel[];
   files = new MatTableDataSource<FileStatusModel>();
+  pageSize = 5;
+  currentPage = 0;
+  moreData = true;
 
   constructor(private dialog: MatDialog, private httpClient: HttpClient, private snackbar : MatSnackBar) { }
 
@@ -33,22 +38,40 @@ export class UploadStatusComponent implements OnInit, AfterViewInit {
 
   refresh() {
     if(!this.loading) {
-      this.getData();      
+      this.currentPage=0;
+      this.files.data.splice(0, this.files.data.length);
+      this.getMore();
     }
+  }
+
+  getMore() {
+    this.getData(this.currentPage++, this.pageSize);      
   }
 
   error: boolean;
   loading: boolean = false;
   errorMessage: string;
-  getData() {
+  getData(page: number, size: number) {
     this.loading = true;
     this.error = false;
 
-    let api = this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/upload-status/`);
+    let api = this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/upload-status/`+page+`/`+size);
     api.subscribe(
-      (response: FileStatusModel[]) => {
+      (response: FileStatusResponse) => {
+        let newData = response.content;
         this.loading = false;
-        this.files.data = response;
+        if(newData.length == 0) {
+          this.moreData = false;
+        } else {
+          this.moreData = true;
+          if(this.data != null) {
+            this.data.push(...newData);
+          } else {
+            this.data = newData;
+          }
+          
+          this.files = new MatTableDataSource<FileStatusModel>(this.data);
+        }
       }, 
 
       (error) => {

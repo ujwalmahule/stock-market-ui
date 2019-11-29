@@ -19,3 +19,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<button *ngIf="moreData" mat-stroked-button (click)="getMore()" matTooltip="Display More" class="getMoreButton">...</button>
