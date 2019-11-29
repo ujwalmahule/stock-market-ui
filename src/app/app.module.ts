@@ -40,7 +40,8 @@ import { ManageCompanyComponent } from './components/manage-company/manage-compa
 import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component';
 import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component'; 
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { ExchangeEditorDialogComponent } from './components/exchange-editor-dialog/exchange-editor-dialog.component'; 
+import { ExchangeEditorDialogComponent } from './components/exchange-editor-dialog/exchange-editor-dialog.component';
+import { IpoEditorDialogComponent } from './components/ipo-editor-dialog/ipo-editor-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
     ManageCompanyComponent,
     ManageExchangeComponent,
     ManageIpoComponent,
-    ExchangeEditorDialogComponent
+    ExchangeEditorDialogComponent,
+    IpoEditorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,8 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
     LoginPageComponent, 
     SignupPageComponent, 
     UploadStatusDialogComponent,
-    ExchangeEditorDialogComponent
+    ExchangeEditorDialogComponent,
+    IpoEditorDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
