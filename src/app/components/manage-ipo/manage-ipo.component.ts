@@ -56,7 +56,9 @@ export class ManageIpoComponent implements OnInit, AfterViewInit {
         } else {
           this.errorMessage = "Error occured while calling service.";
         }
-        this.snackbar.open(this.errorMessage);
+        this.snackbar.open(this.errorMessage, 'Close', {
+          duration: 3000
+        });
       }
     );
   }

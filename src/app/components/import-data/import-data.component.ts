@@ -50,7 +50,9 @@ export class ImportDataComponent implements OnInit {
           } else {
             errorMessage = "Error occured while uploading, please try again after some time.";
           }
-          this.snackbar.open(errorMessage);
+          this.snackbar.open(errorMessage, 'Close', {
+            duration: 3000
+          });
       }
     );
   }

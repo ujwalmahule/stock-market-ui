@@ -59,7 +59,9 @@ export class ExchangeEditorDialogComponent implements OnInit {
     api.subscribe(
       (response) => {
         this.loading=false;
-        this.snackbar.open("Exchange created.")
+        this.snackbar.open("Exchange created.", 'Close', {
+          duration: 3000
+        });
         this.editorForm.reset();
         this.cancel();
       },
@@ -71,7 +73,9 @@ export class ExchangeEditorDialogComponent implements OnInit {
           } else {
             errorMessage = "Error occured while creating new exchange."
           }
-          this.snackbar.open(errorMessage);
+          this.snackbar.open(errorMessage, 'Close', {
+            duration: 3000
+          });
       }
     );
   }
@@ -82,7 +86,9 @@ export class ExchangeEditorDialogComponent implements OnInit {
     api.subscribe(
       (response) => {
         this.loading=false;
-        this.snackbar.open("Exchange details updated.")
+        this.snackbar.open("Exchange details updated.", 'Close', {
+          duration: 3000
+        });
         this.editorForm.reset();
         this.cancel();
       },
@@ -94,7 +100,9 @@ export class ExchangeEditorDialogComponent implements OnInit {
           } else {
             errorMessage = "Error occured while updating exchange details."
           }
-          this.snackbar.open(errorMessage);
+          this.snackbar.open(errorMessage, 'Close', {
+            duration: 3000
+          });
       }
     );
   }

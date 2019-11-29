@@ -38,7 +38,9 @@ export class SignupPageComponent implements OnInit, BodyComponent {
     let api = this.http.post(`${environment.gatewayUrl}/user-service/signup`, data);
     api.subscribe(
       (response) => {
-        this.snackbar.open("We have emailed you the activation link, please check your email.")
+        this.snackbar.open("We have emailed you the activation link, please check your email.", 'Close', {
+          duration: 3000
+        });
         this.signupForm.reset();
       },
       (error) => {
