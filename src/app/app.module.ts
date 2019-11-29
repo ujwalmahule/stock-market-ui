@@ -40,7 +40,6 @@ import { ManageCompanyComponent } from './components/manage-company/manage-compa
 import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component';
 import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component'; 
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { ExchangeDetailsDialogComponent } from './components/exchange-details-dialog/exchange-details-dialog.component';
 import { ExchangeEditorDialogComponent } from './components/exchange-editor-dialog/exchange-editor-dialog.component'; 
 
 @NgModule({
@@ -58,7 +57,6 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
     ManageCompanyComponent,
     ManageExchangeComponent,
     ManageIpoComponent,
-    ExchangeDetailsDialogComponent,
     ExchangeEditorDialogComponent
   ],
   imports: [
@@ -91,7 +89,13 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
     MatTableModule,
     MatTooltipModule
   ],
-  entryComponents: [AppComponent, LoginPageComponent, SignupPageComponent, UploadStatusDialogComponent],
+  entryComponents: [
+    AppComponent, 
+    LoginPageComponent, 
+    SignupPageComponent, 
+    UploadStatusDialogComponent,
+    ExchangeEditorDialogComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

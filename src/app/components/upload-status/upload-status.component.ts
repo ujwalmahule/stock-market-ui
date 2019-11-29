@@ -63,14 +63,19 @@ export class UploadStatusComponent implements OnInit, AfterViewInit {
         if(newData.length == 0) {
           this.moreData = false;
         } else {
-          this.moreData = true;
+          if(newData.length < this.pageSize) {
+            this.moreData = false;
+          } else {
+            this.moreData = true;
+          }
+
           if(this.data != null) {
             this.data.push(...newData);
+            this.files.data = this.data;
           } else {
             this.data = newData;
+            this.files = new MatTableDataSource<FileStatusModel>(this.data);
           }
-          
-          this.files = new MatTableDataSource<FileStatusModel>(this.data);
         }
       }, 
 
