@@ -35,7 +35,8 @@ import { UserViewComponent } from './components/user-view/user-view.component';
 import { ImportDataComponent } from './components/import-data/import-data.component';
 import { UploadStatusComponent } from './components/upload-status/upload-status.component';
 import {MatTableModule} from '@angular/material/table';
-import { UploadStatusDialogComponent } from './components/upload-status-dialog/upload-status-dialog.component'; 
+import { UploadStatusDialogComponent } from './components/upload-status-dialog/upload-status-dialog.component';
+import { ManageCompanyComponent } from './components/manage-company/manage-company.component'; 
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { UploadStatusDialogComponent } from './components/upload-status-dialog/u
     UserViewComponent,
     ImportDataComponent,
     UploadStatusComponent,
-    UploadStatusDialogComponent
+    UploadStatusDialogComponent,
+    ManageCompanyComponent
   ],
   imports: [
     BrowserModule,
