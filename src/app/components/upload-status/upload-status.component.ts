@@ -18,7 +18,7 @@ export class UploadStatusComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['fileName', 'status', 'details'];
   data: FileStatusModel[];
   files = new MatTableDataSource<FileStatusModel>();
-  pageSize = 5;
+  pageSize = 10;
   currentPage = 0;
   moreData = true;
 
