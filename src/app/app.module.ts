@@ -39,7 +39,8 @@ import { UploadStatusDialogComponent } from './components/upload-status-dialog/u
 import { ManageCompanyComponent } from './components/manage-company/manage-company.component';
 import { ManageExchangeComponent } from './components/manage-exchange/manage-exchange.component';
 import { ManageIpoComponent } from './components/manage-ipo/manage-ipo.component'; 
-import {MatTooltipModule} from '@angular/material/tooltip'; 
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ExchangeDetailsDialogComponent } from './components/exchange-details-dialog/exchange-details-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     UploadStatusDialogComponent,
     ManageCompanyComponent,
     ManageExchangeComponent,
-    ManageIpoComponent
+    ManageIpoComponent,
+    ExchangeDetailsDialogComponent
   ],
   imports: [
     BrowserModule,

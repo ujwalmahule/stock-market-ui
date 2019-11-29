@@ -1,4 +1,4 @@
-<button mat-stroked-button (click)="refresh()">Refresh</button>
+<button mat-stroked-button (click)="refresh()" class="pageWidthButton">Refresh</button>
 <br/>
 <table mat-table [dataSource]="files">
     <ng-container matColumnDef="fileName">
@@ -19,4 +19,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<button *ngIf="moreData" mat-stroked-button (click)="getMore()" matTooltip="Display More" class="getMoreButton">...</button>
+<button *ngIf="moreData" mat-stroked-button (click)="getMore()" matTooltip="Display More" class="pageWidthButton">...</button>

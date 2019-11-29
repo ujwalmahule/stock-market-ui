@@ -2,7 +2,7 @@ table {
     width: 100%;
 }
 
-.getMoreButton {
+.pageWidthButton {
     width: 100%!important;
     min-width: unset!important;
 }
