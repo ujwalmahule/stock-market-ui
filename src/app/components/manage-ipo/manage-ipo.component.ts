@@ -1,3 +1,4 @@
+import { CompanyModel } from './../../model/company-model';
 import { IpoEditorDialogComponent } from './../ipo-editor-dialog/ipo-editor-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { IpoModel } from './../../model/ipo-model';

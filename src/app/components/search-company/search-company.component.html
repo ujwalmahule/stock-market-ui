@@ -1,0 +1,4 @@
+<input matInput placeholder="Company" formControlName="companyName" [matAutocomplete]="auto" required>
+<mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let company of companies | async" [value]="company.companyName">{{company.companyName}}</mat-option>
+</mat-autocomplete>

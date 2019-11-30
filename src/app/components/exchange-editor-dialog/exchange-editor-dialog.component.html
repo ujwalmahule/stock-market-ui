@@ -1,6 +1,7 @@
 <form [formGroup]="editorForm" autocomplete="off">
     <mat-card>
         <mat-card-content>
+            <input type="hidden" id="id" formControlName="id">
             <mat-form-field>
                 <input *ngIf="!editMode" readonly matInput placeholder="Exchange Code" formControlName="code" id="code" required>
                 <input *ngIf="editMode" matInput placeholder="Exchange Code" formControlName="code" id="code" required>

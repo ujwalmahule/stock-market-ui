@@ -43,6 +43,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { ExchangeEditorDialogComponent } from './components/exchange-editor-dialog/exchange-editor-dialog.component';
 import { IpoEditorDialogComponent } from './components/ipo-editor-dialog/ipo-editor-dialog.component';
 import { CompanyEditorDialogComponent } from './components/company-editor-dialog/company-editor-dialog.component'; 
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { SearchCompanyComponent } from './components/search-company/search-company.component'; 
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { CompanyEditorDialogComponent } from './components/company-editor-dialog
     ManageIpoComponent,
     ExchangeEditorDialogComponent,
     IpoEditorDialogComponent,
-    CompanyEditorDialogComponent
+    CompanyEditorDialogComponent,
+    SearchCompanyComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import { CompanyEditorDialogComponent } from './components/company-editor-dialog
     MatExpansionModule,
     MatPaginatorModule,
     MatTableModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     AppComponent, 
