@@ -20,6 +20,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatPaginatorModule} from '@angular/material/paginator'; 
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -95,7 +96,8 @@ import { SearchCompanyComponent } from './components/search-company/search-compa
     MatPaginatorModule,
     MatTableModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     AppComponent, 

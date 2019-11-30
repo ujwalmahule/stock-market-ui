@@ -91,8 +91,6 @@ export class IpoEditorDialogComponent implements OnInit, AfterViewInit {
       this.editMode = true;
     }
 
-    
-
     this.editorForm = this.fb.group({
       id: [''],
       company: this.fb.group({
@@ -147,7 +145,6 @@ export class IpoEditorDialogComponent implements OnInit, AfterViewInit {
       );
     }
   }
-
 
   cancel() {
     this.dialogRef.close();
