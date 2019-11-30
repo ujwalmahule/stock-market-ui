@@ -1,3 +1,4 @@
+import { SectorModel } from './../../model/sector-model';
 import { Exchange2CompanyModel } from './../../model/exchange2-company-model';
 import { ExchangeModel } from './../../model/exchange-model';
 import { HttpClient } from '@angular/common/http';
@@ -57,6 +58,7 @@ export class CompanyEditorDialogComponent implements OnInit {
   initForm(response) {
     this.exchanges = response;
     this.loading = false;
+    this.getSectors()
     if(!this.newObject) {
       this.id = this.data.id
       this.editorForm.get('id').setValue(this.data.id)
@@ -69,7 +71,6 @@ export class CompanyEditorDialogComponent implements OnInit {
     }
 
     this.exchanges.forEach((o,i) => {
-      //let control = new FormControl(this.newObject ? null : this.isExchangeSelected(o));
       let group = this.fb.group({
         companyId: [''],
         exchangeId: [this.findExchangeId(o)],
@@ -81,23 +82,52 @@ export class CompanyEditorDialogComponent implements OnInit {
     if(!this.editMode) { this.editorForm.get('exchange').disable() }
   }
 
+  sectors: SectorModel[]
+  getSectors() {
+    this.loading = true;
+    let api = this.http.get(`${environment.gatewayUrl}/stock-market-service/sector/`);
+    api.subscribe(
+      response => {this.loading = false; this.sectors = <SectorModel[]>response;},
+      error => this.handleError(error)
+    )
+  }
+
   updateCheckboxValues() {
     (this.editorForm.get('exchange') as FormArray).controls.forEach((o, i) => {
       let checkbox = (o as FormGroup).get('exchangeId')
       if(checkbox.value == true) {
         checkbox.setValue(this.exchanges[i].id)
       }
+      console.log(checkbox.value)
+      if(checkbox.value == false) {
+        checkbox.setValue(null)
+      }
     })
+  }
+
+  createNewObject() {
+    this.loading = true;
+    let api = this.http.post(`${environment.gatewayUrl}/stock-market-service/company/`, this.editorForm.value);
+    api.subscribe(
+      (response) => {
+        this.loading=false;
+        this.snackbar.open("Company has been created successfully.", 'Close', {
+          duration: 3000
+        });
+        this.editorForm.reset();
+        this.cancel();
+      },
+      (error) => this.handleError(error)
+    );
   }
 
   updateObject() {
     this.loading = true;
-    console.log(this.editorForm.value)
     let api = this.http.put(`${environment.gatewayUrl}/stock-market-service/company/`+this.id, this.editorForm.value);
     api.subscribe(
       (response) => {
         this.loading=false;
-        this.snackbar.open("Company details updated.", 'Close', {
+        this.snackbar.open("Company details updated successfully.", 'Close', {
           duration: 3000
         });
         this.editorForm.reset();
@@ -110,8 +140,7 @@ export class CompanyEditorDialogComponent implements OnInit {
   performAction() {
     this.updateCheckboxValues()
     if(this.newObject) {
-      console.log("ok")
-      //this.createNewObject();
+      this.createNewObject();
     } else if(this.editMode) {
       this.updateObject();
     } else {
@@ -122,22 +151,26 @@ export class CompanyEditorDialogComponent implements OnInit {
 
   findExchangeId(exchange: ExchangeModel): number {
     let id = null
-    this.data.exchange.forEach((e2c, i) => {
-      if(e2c.exchangeId == exchange.id) {
-        id = exchange.id
-      }
-    })
+    if(this.data) {
+      this.data.exchange.forEach((e2c, i) => {
+        if(e2c.exchangeId == exchange.id) {
+          id = exchange.id
+        }
+      })
+    }
     
     return id
   }
 
   findStockCode(exchange: ExchangeModel): string {
     let code = null
-    this.data.exchange.forEach((e2c, i) => {
-      if(e2c.exchangeId == exchange.id) {
-        code = e2c.stockCode
-      }
-    })
+    if(this.data) {
+      this.data.exchange.forEach((e2c, i) => {
+        if(e2c.exchangeId == exchange.id) {
+          code = e2c.stockCode
+        }
+      })
+    }
     
     return code
   }
