@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatPaginatorModule} from '@angular/material/paginator'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {ChartsModule} from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,7 +46,8 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
 import { IpoEditorDialogComponent } from './components/ipo-editor-dialog/ipo-editor-dialog.component';
 import { CompanyEditorDialogComponent } from './components/company-editor-dialog/company-editor-dialog.component'; 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { SearchCompanyComponent } from './components/search-company/search-company.component'; 
+import { SearchCompanyComponent } from './components/search-company/search-company.component';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component'; 
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { SearchCompanyComponent } from './components/search-company/search-compa
     ExchangeEditorDialogComponent,
     IpoEditorDialogComponent,
     CompanyEditorDialogComponent,
-    SearchCompanyComponent
+    SearchCompanyComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,8 @@ import { SearchCompanyComponent } from './components/search-company/search-compa
     MatTableModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChartsModule
   ],
   entryComponents: [
     AppComponent, 
