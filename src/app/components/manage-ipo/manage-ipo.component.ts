@@ -3,7 +3,7 @@ import { IpoEditorDialogComponent } from './../ipo-editor-dialog/ipo-editor-dial
 import { HttpClient } from '@angular/common/http';
 import { IpoModel } from './../../model/ipo-model';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./manage-ipo.component.css']
 })
 export class ManageIpoComponent implements OnInit, AfterViewInit {
+
+  @Input('adminView')
+  isAdmin: boolean
 
   displayedColumns: string[] = ['companyName', 'exchange', 'price', 'shares', 'openDate', 'details'];
   datasource = new MatTableDataSource<IpoModel>();
