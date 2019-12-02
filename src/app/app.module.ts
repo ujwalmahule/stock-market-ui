@@ -47,7 +47,9 @@ import { IpoEditorDialogComponent } from './components/ipo-editor-dialog/ipo-edi
 import { CompanyEditorDialogComponent } from './components/company-editor-dialog/company-editor-dialog.component'; 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchCompanyComponent } from './components/search-company/search-company.component';
-import { LineChartComponent } from './components/charts/line-chart/line-chart.component'; 
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+import { Export2excelComponent } from './components/export2excel/export2excel.component';
+import { IpoViewDialogComponent } from './components/ipo-view-dialog/ipo-view-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { LineChartComponent } from './components/charts/line-chart/line-chart.co
     IpoEditorDialogComponent,
     CompanyEditorDialogComponent,
     SearchCompanyComponent,
-    LineChartComponent
+    LineChartComponent,
+    Export2excelComponent,
+    IpoViewDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,8 @@ import { LineChartComponent } from './components/charts/line-chart/line-chart.co
     UploadStatusDialogComponent,
     ExchangeEditorDialogComponent,
     IpoEditorDialogComponent,
-    CompanyEditorDialogComponent
+    CompanyEditorDialogComponent,
+    IpoViewDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

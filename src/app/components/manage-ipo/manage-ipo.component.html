@@ -30,6 +30,7 @@
         <th mat-header-cell *matHeaderCellDef> Details </th>
         <td mat-cell *matCellDef="let obj">
             <button *ngIf="isAdmin" mat-stroked-button (click)="detailsOf(obj)">View</button>
+            <button *ngIf="!isAdmin" mat-stroked-button (click)="userViewDetailsOf(obj)">View</button>
         </td>
     </ng-container>
     

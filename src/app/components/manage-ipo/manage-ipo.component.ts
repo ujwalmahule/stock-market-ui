@@ -1,3 +1,4 @@
+import { IpoViewDialogComponent } from './../ipo-view-dialog/ipo-view-dialog.component';
 import { CompanyModel } from './../../model/company-model';
 import { IpoEditorDialogComponent } from './../ipo-editor-dialog/ipo-editor-dialog.component';
 import { HttpClient } from '@angular/common/http';
@@ -65,6 +66,13 @@ export class ManageIpoComponent implements OnInit, AfterViewInit {
         });
       }
     );
+  }
+
+  userViewDetailsOf(row: IpoModel) {
+    let ref = this.dialog.open(IpoViewDialogComponent, {width:'500px', data:row});
+    ref.afterClosed().subscribe(() => {
+      this.refresh();
+    });
   }
 
   detailsOf(row: IpoModel) {
