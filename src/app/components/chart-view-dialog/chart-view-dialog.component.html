@@ -1,1 +1,11 @@
-<p>chart-view-dialog works!</p>
+<mat-tab-group>
+    <mat-tab *ngFor="let exchange of exchanges; let i = index" label="{{exchange.code}}">
+        <div class="container" *ngIf="!dataAvailable[i]">
+            <br/>
+            <h3>No Data Available for Selected Date</h3>
+        </div>
+        <div *ngIf="dataAvailable[i]">
+            hello
+        </div>
+    </mat-tab>
+</mat-tab-group>
