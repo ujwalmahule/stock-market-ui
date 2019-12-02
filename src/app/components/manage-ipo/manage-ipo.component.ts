@@ -69,10 +69,7 @@ export class ManageIpoComponent implements OnInit, AfterViewInit {
   }
 
   userViewDetailsOf(row: IpoModel) {
-    let ref = this.dialog.open(IpoViewDialogComponent, {width:'500px', data:row});
-    ref.afterClosed().subscribe(() => {
-      this.refresh();
-    });
+    this.dialog.open(IpoViewDialogComponent, {width:'500px', data:row});
   }
 
   detailsOf(row: IpoModel) {

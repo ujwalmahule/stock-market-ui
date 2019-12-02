@@ -18,12 +18,19 @@
     </ng-container>
 
     <ng-container matColumnDef="details">
-        <th mat-header-cell *matHeaderCellDef> Details </th>
-        <td mat-cell *matCellDef="let obj"> <button mat-stroked-button (click)="detailsOf(obj)">View</button> </td>
+        <th mat-header-cell *matHeaderCellDef> {{isAdmin ? 'Details' : 'Actions'}} </th>
+        <td mat-cell *matCellDef="let obj"> 
+            <button *ngIf="isAdmin" mat-stroked-button (click)="detailsOf(obj)">View</button> 
+            <div *ngIf="!isAdmin">
+                <button mat-stroked-button (click)="userViewDetailsOf(obj)">Details</button> &nbsp; 
+                <button mat-stroked-button (click)="viewChart(obj)">Chart</button> &nbsp;
+                <button mat-stroked-button (click)="compareThis(obj)">Compare</button> 
+            </div>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 <button *ngIf="moreData" mat-stroked-button (click)="getMore()" matTooltip="Display More" class="pageWidthButton">...</button>
-<button mat-stroked-button (click)="detailsOf(null)" class="pageWidthButton">Add New Exchange</button>
+<button *ngIf="isAdmin" mat-stroked-button (click)="detailsOf(null)" class="pageWidthButton">Add New Exchange</button>

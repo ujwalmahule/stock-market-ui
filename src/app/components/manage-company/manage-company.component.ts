@@ -1,9 +1,12 @@
+import { CompareCompanyDialogComponent } from './../compare-company-dialog/compare-company-dialog.component';
+import { ChartViewDialogComponent } from './../chart-view-dialog/chart-view-dialog.component';
+import { CompanyViewDialogComponent } from './../company-view-dialog/company-view-dialog.component';
 import { CompanyListResponse } from './../../model/company-list-response';
 import { CompanyEditorDialogComponent } from './../company-editor-dialog/company-editor-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { CompanyModel } from './../../model/company-model';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
@@ -14,6 +17,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./manage-company.component.css']
 })
 export class ManageCompanyComponent implements OnInit, AfterViewInit {
+
+  @Input('adminView')
+  isAdmin: boolean
 
   displayedColumns: string[] = ['companyName', 'exchange', 'sector', 'details']
   datasource = new MatTableDataSource<CompanyModel>()
@@ -94,6 +100,18 @@ export class ManageCompanyComponent implements OnInit, AfterViewInit {
     ref.afterClosed().subscribe(() => {
       this.refresh();
     });
+  }
+
+  userViewDetailsOf(row: CompanyModel) {
+    this.dialog.open(CompanyViewDialogComponent, {width:'500px', data:row});
+  }
+
+  compareThis(row: CompanyModel) {
+    this.dialog.open(CompareCompanyDialogComponent, {width:'80%', height:'80%', data:row});
+  }
+
+  viewChart(row: CompanyModel) {
+    this.dialog.open(ChartViewDialogComponent, {width:'80%', height:'80%', data:row});
   }
 
   getExchangeList(company: CompanyModel): string {

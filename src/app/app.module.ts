@@ -50,6 +50,9 @@ import { SearchCompanyComponent } from './components/search-company/search-compa
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { Export2excelComponent } from './components/export2excel/export2excel.component';
 import { IpoViewDialogComponent } from './components/ipo-view-dialog/ipo-view-dialog.component';
+import { CompanyViewDialogComponent } from './components/company-view-dialog/company-view-dialog.component';
+import { ChartViewDialogComponent } from './components/chart-view-dialog/chart-view-dialog.component';
+import { CompareCompanyDialogComponent } from './components/compare-company-dialog/compare-company-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,10 @@ import { IpoViewDialogComponent } from './components/ipo-view-dialog/ipo-view-di
     SearchCompanyComponent,
     LineChartComponent,
     Export2excelComponent,
-    IpoViewDialogComponent
+    IpoViewDialogComponent,
+    CompanyViewDialogComponent,
+    ChartViewDialogComponent,
+    CompareCompanyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +121,10 @@ import { IpoViewDialogComponent } from './components/ipo-view-dialog/ipo-view-di
     ExchangeEditorDialogComponent,
     IpoEditorDialogComponent,
     CompanyEditorDialogComponent,
-    IpoViewDialogComponent
+    IpoViewDialogComponent,
+    CompanyViewDialogComponent,
+    ChartViewDialogComponent,
+    CompareCompanyDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
