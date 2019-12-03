@@ -1,3 +1,16 @@
+<form [formGroup]="editorForm" autocomplete="off">
+    <mat-form-field>
+        <input matInput [matDatepicker]="startDate" formControlName="startDate" placeholder="Start date">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="endDate" formControlName="endDate" placeholder="End date">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+    </mat-form-field>
+    <button mat-stroked-button (click)="refresh()" [disabled]="!editorForm.valid || loading">Refresh</button>
+</form>
 <mat-tab-group>
     <mat-tab *ngFor="let exchange of exchanges; let i = index" label="{{exchange.code}}">
         <div class="container" *ngIf="!dataAvailable[i]">
@@ -5,7 +18,17 @@
             <h3>No Data Available for Selected Date</h3>
         </div>
         <div *ngIf="dataAvailable[i]">
-            hello
+            <div #one>
+                <app-line-chart [companyName]="companyNames[i]"></app-line-chart>
+            </div>
+            <div #two>
+                <app-line-chart [companyName]="companyNames[i]" [compareCompany]="true"></app-line-chart>
+            </div>
         </div>
     </mat-tab>
 </mat-tab-group>
+
+
+<!--
+    <app-line-chart  [chartId]="getChartId('linel',i)" [companyName]="companyNames[i]" [prices]="values[i]" [dates]="labels[i]"></app-line-chart>
+-->

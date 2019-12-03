@@ -124,7 +124,8 @@ import { CompareCompanyDialogComponent } from './components/compare-company-dial
     IpoViewDialogComponent,
     CompanyViewDialogComponent,
     ChartViewDialogComponent,
-    CompareCompanyDialogComponent
+    CompareCompanyDialogComponent,
+    LineChartComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

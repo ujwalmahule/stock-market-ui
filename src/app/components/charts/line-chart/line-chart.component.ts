@@ -1,10 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { StockPrice } from './../../../model/stock-price';
-import { Component, OnInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
-import { Label, Color } from 'ng2-charts';
-import { environment } from 'src/environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiService } from './../../../service/api.service';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList, EventEmitter } from '@angular/core';
 import * as Chart from 'chart.js';
 
 @Component({
@@ -12,38 +7,37 @@ import * as Chart from 'chart.js';
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css']
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent implements OnInit, AfterViewInit {
 
-  companyName = "Yes Bank Pvt. Ltd. (BSE-532648)"
-  prices: StockPrice[]
-  dateLabels: string[]
+  @Input('companyName')
+  companyName: string
+  
+  @Input('prices')
   values: number[]
-  values2: number[]
-  loading = false
 
-  constructor(private httpClient: HttpClient, private snackbar : MatSnackBar) { }
+  @Input('dates')
+  labels: string[]
 
-  ngOnInit() {
-    this.loading = true;
-    let api = this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/price/for-company-date-range/18/14/01.11.2019/06.11.2019`);
-    api.subscribe(
-      response => {
-        this.dateLabels = (response as Array<StockPrice>).map((obj: StockPrice) => {
-          let dt: Date = obj.timestamp;
-          let test: Date = new Date(dt)
-          return test.toLocaleDateString('en', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})
-        });
-        this.values = (response as Array<StockPrice>).map((obj: StockPrice) => obj.price);
-        this.values2 = (response as Array<StockPrice>).map((obj: StockPrice) => obj.price + (Math.random()*50) - (Math.random()*20));
-        this.createChart()
-      },
-      error => this.handleError(error)
-    )
-  }
+  @Input('compareCompany')
+  compareCompany: boolean = false
 
   chart: Chart
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit() {
+    
+  }
+  
+
+  @ViewChild('canvas', {static: true}) canvas : ElementRef
+   
+  ngAfterViewInit() {
+        
+  }
+  
   createChart() {
-    this.chart = new Chart("canvas", {
+    this.chart = new Chart(this.canvas.nativeElement, {
       type: 'line',
       data: {
         datasets:[
@@ -52,59 +46,41 @@ export class LineChartComponent implements OnInit {
             label: this.companyName,
             fill: false,
             borderColor: '#3cba9f'
-          },
+          }/*,
           {
             data: this.values2, 
             label: "Other Company",
             fill: false,
             borderColor: 'rgba(185,223,146)'
-          }
+          }*/
         ],
-        labels: this.dateLabels,
+        labels: this.labels,
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           xAxes: [{
               display: false
           }]
-      }
+        },
+        elements: {
+          point:{
+            radius: 0
+          }
+        }
       }
     })
   }
-
-  lineChartData: ChartDataSets[] = [
-    { data: this.values, label: this.companyName }
-  ];
-
-  lineChartLabels: Label[] = [];
-
-  lineChartOptions = {
-    responsive: true,
-  };
+/*
 
   lineChartColors: Color[] = [
     {
       borderColor: 'black',
       backgroundColor: 'rgba(255,255,0,0.28)',
     },
-  ];
+  ];*/
 
-  lineChartLegend = true;
-  lineChartPlugins = [];
-  lineChartType = 'line';
-
-  handleError(error) {
-    let errorMessage: string
-    this.loading = false;
-    if(error.error && error.error.message) {
-      errorMessage = "Error:" + error.error.message;
-    } else {
-      errorMessage = "Error occured while calling service.";
-    }
-    this.snackbar.open(errorMessage, 'Close', {
-      duration: 3000
-    });
-  }
-
+  //lineChartLegend = true;
+  
 }

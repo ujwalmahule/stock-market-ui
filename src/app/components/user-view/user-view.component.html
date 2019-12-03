@@ -1,15 +1,17 @@
 <mat-tab-group>
     <mat-tab label="IPOs">
-        IPOs
+        <app-manage-ipo [adminView]=false></app-manage-ipo>
     </mat-tab>
     <mat-tab label="Compare Company">
-        compare company
+        <app-manage-company [adminView]=false></app-manage-company>
     </mat-tab>
     <mat-tab label="Compare Sector">
         compare sector
     </mat-tab>
     <mat-tab label="Other">
-        TBD
+        TBD<!--
+        <app-line-chart></app-line-chart>
+        -->
     </mat-tab>
 </mat-tab-group>
     
