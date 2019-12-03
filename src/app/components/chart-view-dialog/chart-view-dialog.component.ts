@@ -5,7 +5,6 @@ import { ApiService } from './../../service/api.service';
 import { ExchangeModel } from './../../model/exchange-model';
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, EventEmitter, Output, QueryList, ViewChildren } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CompanyModel } from 'src/app/model/company-model';
 import { StockPrice } from 'src/app/model/stock-price';
 
 @Component({
