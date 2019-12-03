@@ -22,6 +22,10 @@ export class ApiService {
   getPriceList(companyId: number, exchangeId: number, startDate: string, endDate: string): Observable<Object> {
     return this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/price/for-company-date-range/${companyId}/${exchangeId}/${startDate}/${endDate}`);
   }
+
+  searchCompanies(searchText: string) {
+    return this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/company/search/${searchText}`)
+  }
   
   handleError(error, serviceName: string) {
     let errorMessage: string

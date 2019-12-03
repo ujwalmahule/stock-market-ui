@@ -9,6 +9,19 @@
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
         <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Compare company" formControlName="compareCompany" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="updateTextField" (optionSelected)="updateCompanyId($event.option.value)">
+            <mat-option *ngFor="let company of searchedCompanies" [value]="company">{{company.companyName}}</mat-option>
+        </mat-autocomplete> 
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select  formControlName="chartType" placeholder="Chart Type">
+            <mat-option value=1>Line Chart</mat-option>
+            <mat-option value=2>Bar Chart</mat-option>
+        </mat-select>
+    </mat-form-field>
+    &nbsp;
     <button mat-stroked-button (click)="refresh()" [disabled]="!editorForm.valid || loading">Refresh</button>
 </form>
 <mat-tab-group>
@@ -21,8 +34,9 @@
             <div #one>
                 <app-line-chart [companyName]="companyNames[i]"></app-line-chart>
             </div>
+            <br/>
             <div #two>
-                <app-line-chart [companyName]="companyNames[i]" [compareCompany]="true"></app-line-chart>
+                <app-line-chart [companyName]="compareCompanyName[i]" [compareCompany]="true"></app-line-chart>
             </div>
         </div>
     </mat-tab>

@@ -1,3 +1,4 @@
+import { CompanyModel } from './../../model/company-model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LineChartComponent } from './../charts/line-chart/line-chart.component';
 import { ApiService } from './../../service/api.service';
@@ -24,9 +25,14 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
   companyNames: string[] = ['', '']
   values: number[][] = [[], []]
   labels: string[][] = [[], []]
+  
+  compareViewOn: boolean = false
+  compareCompanyName: string[] = ['', '']
+  
   startDate: Date[] = [,]
   endDate: Date[] = [,]
   selIndex = 0;
+  searchedCompanies: CompanyModel[]
 
   editorForm: FormGroup 
   loading = false
@@ -34,8 +40,16 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.editorForm = this.fb.group({
         startDate: [new Date(), Validators.required],
-        endDate: [new Date(), Validators.required]
+        endDate: [new Date(), Validators.required],
+        compareCompany: [],
+        chartType: [1]
     })
+
+    //enable auto search
+    this.editorForm.get('compareCompany').valueChanges.subscribe( (text) => {
+      this.searchCompany(text)
+    });
+
     this.prepareChartData()
   }
 
@@ -119,7 +133,9 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
             let dt: Date = new Date(obj.timestamp)
             return dt.toLocaleDateString('en', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})
           });
-          this.sendValuesToChart(exchangeIndex)
+          this.sendValuesToChart(exchangeIndex, false)
+
+          this.sendValuesToChart(exchangeIndex, true)
           this.dataAvailable[exchangeIndex] = true
         } else {
           this.dataAvailable[exchangeIndex] = false
@@ -132,13 +148,18 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     )
   }
 
-  sendValuesToChart(index: number) {
+  sendValuesToChart(index: number, comparingCompany: boolean) {
     if(this.values.length>0 && this.chartComponents.length>index) {
-      this.editorForm.get('startDate').setValue(this.startDate[index])
-      this.editorForm.get('endDate').setValue(this.endDate[index])
-      this.chartComponents[index].labels=this.labels[index]
-      this.chartComponents[index].values=this.values[index]
-      this.chartComponents[index].createChart()
+      this.chartComponents.forEach((o, i) => {        
+        if(o.companyName == this.companyNames[index] && ((o.compareCompany && comparingCompany)||(!o.compareCompany && !comparingCompany))) {
+          if(o.chart) { o.chart.destroy() }
+          this.editorForm.get('startDate').setValue(this.startDate[index])
+          this.editorForm.get('endDate').setValue(this.endDate[index])
+          o.labels=this.labels[index]
+          o.values=this.values[index]
+          o.createChart()
+        }
+      })
     }
   }
 
@@ -150,6 +171,38 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     this.startDate[this.selIndex] = new Date(this.editorForm.get('startDate').value)
     this.endDate[this.selIndex] = new Date(this.editorForm.get('endDate').value)
     this.prepareDataForDates(this.selIndex)
+  }
+
+  searching = false
+  searchCompany = (query) => {
+    if(!this.searching && query) {
+      let txt = query
+      if(query && query.id) {
+        txt = query.companyName;
+      }
+      this.searching = true;
+      this.apiService.searchCompanies(txt).subscribe(
+        (response) => {
+          this.searchedCompanies = <CompanyModel[]>response;
+          this.searching = false
+        },
+        (error) => {
+          this.searching = false
+        }
+      );
+    }
+  }
+
+  updateTextField(company:any) {
+    if(company && company.id) {
+      return company.companyName;
+    }
+    return company;
+  }
+
+  updateCompanyId(company: CompanyModel) {
+    this.editorForm.get('compareCompany').setValue(company.companyName);
+    return company.companyName;
   }
 
 }
