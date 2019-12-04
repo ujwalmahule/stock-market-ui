@@ -19,7 +19,7 @@
                 </mat-form-field>
             </div>
             <ng-container formArrayName="exchange">
-                <div *ngFor="let group of this.editorForm.controls.exchange.controls; let i = index">
+                <div *ngFor="let group of this.editorForm['controls'].exchange['controls']; let i = index">
                     <div [formGroupName]="i">
                         <mat-checkbox  [value]="exchanges[i].id" formControlName="exchangeId">
                             {{exchanges[i].code}}

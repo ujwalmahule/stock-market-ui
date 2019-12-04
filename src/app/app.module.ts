@@ -46,7 +46,6 @@ import { ExchangeEditorDialogComponent } from './components/exchange-editor-dial
 import { IpoEditorDialogComponent } from './components/ipo-editor-dialog/ipo-editor-dialog.component';
 import { CompanyEditorDialogComponent } from './components/company-editor-dialog/company-editor-dialog.component'; 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { SearchCompanyComponent } from './components/search-company/search-company.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { Export2excelComponent } from './components/export2excel/export2excel.component';
 import { IpoViewDialogComponent } from './components/ipo-view-dialog/ipo-view-dialog.component';
@@ -72,7 +71,6 @@ import { CompareCompanyDialogComponent } from './components/compare-company-dial
     ExchangeEditorDialogComponent,
     IpoEditorDialogComponent,
     CompanyEditorDialogComponent,
-    SearchCompanyComponent,
     LineChartComponent,
     Export2excelComponent,
     IpoViewDialogComponent,
