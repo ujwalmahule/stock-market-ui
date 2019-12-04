@@ -15,11 +15,20 @@ export class LineChartComponent implements OnInit, AfterViewInit {
   @Input('prices')
   values: number[]
 
+  @Input('companyName2')
+  companyName2: string
+  
+  @Input('prices2')
+  values2: number[]
+
   @Input('dates')
   labels: string[]
 
   @Input('compareCompany')
   compareCompany: boolean = false
+
+  @Input('exchangeIndex')
+  exchangeIndex: number
 
   chart: Chart
 
@@ -45,14 +54,8 @@ export class LineChartComponent implements OnInit, AfterViewInit {
             data: this.values, 
             label: this.companyName,
             fill: false,
-            borderColor: '#3cba9f'
-          }/*,
-          {
-            data: this.values2, 
-            label: "Other Company",
-            fill: false,
-            borderColor: 'rgba(185,223,146)'
-          }*/
+            borderColor: this.compareCompany ? 'rgba(185,223,146)' : '#3cba9f'
+          }
         ],
         labels: this.labels,
       },
@@ -72,15 +75,41 @@ export class LineChartComponent implements OnInit, AfterViewInit {
       }
     })
   }
-/*
 
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];*/
-
-  //lineChartLegend = true;
-  
+  createMergedChart() {
+    this.chart = new Chart(this.canvas.nativeElement, {
+      type: 'line',
+      data: {
+        datasets:[
+          {
+            data: this.values, 
+            label: this.companyName,
+            fill: false,
+            borderColor: '#3cba9f'
+          },
+          {
+            data: this.values2, 
+            label: this.companyName2,
+            fill: false,
+            borderColor: 'rgba(185,223,146)'
+          }
+        ],
+        labels: this.labels,
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+              display: false
+          }]
+        },
+        elements: {
+          point:{
+            radius: 0
+          }
+        }
+      }
+    })
+  }  
 }

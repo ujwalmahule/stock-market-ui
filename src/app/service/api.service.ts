@@ -26,6 +26,10 @@ export class ApiService {
   searchCompanies(searchText: string) {
     return this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/company/search/${searchText}`)
   }
+
+  getCompanyByName(companyName: string) {
+    return this.httpClient.get(`${environment.gatewayUrl}/stock-market-service/company/name/${companyName}`)
+  }
   
   handleError(error, serviceName: string) {
     let errorMessage: string

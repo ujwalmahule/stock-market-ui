@@ -20,16 +20,19 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: CompanyModel) { }
 
   exchanges: ExchangeModel[]
-  dataAvailable: boolean[] = [true, true]
+  dataAvailable: boolean[] = [false, false]
+  companyAvailable: boolean[] = [false, false]
   companyNames: string[] = ['', '']
   values: number[][] = [[], []]
   labels: string[][] = [[], []]
   
   compareViewOn: boolean = false
   compareCompanyName: string[] = ['', '']
+  compareCompanyId: number
+  compValues: number[][] = [[], []]
   
-  startDate: Date[] = [,]
-  endDate: Date[] = [,]
+  startDate: Date[] = [new Date(), new Date()]
+  endDate: Date[] = [new Date(), new Date()]
   selIndex = 0;
   searchedCompanies: CompanyModel[]
 
@@ -41,7 +44,8 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
         startDate: [new Date(), Validators.required],
         endDate: [new Date(), Validators.required],
         compareCompany: [],
-        chartType: [1]
+        chartType: [1],
+        merge: ['']
     })
 
     //enable auto search
@@ -87,9 +91,20 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     this.companyNames[index] = this.data.companyName + " (" + this.exchanges[index].code + "-"
     this.data.exchange.forEach((e2c, i) => {
       if(e2c.exchangeId == this.exchanges[index].id) {
-        this.companyNames[index] += e2c.stockCode + ")"
+        this.companyNames[index] += e2c.stockCode
       }
     })
+    this.companyNames[index] += ")"
+  }
+
+  prepareCompareCompanyName(index: number, comp: CompanyModel) {
+    this.compareCompanyName[index] = comp.companyName + " (" + this.exchanges[index].code + "-"
+    comp.exchange.forEach((e2c, i) => {
+      if(e2c.exchangeId == this.exchanges[index].id) {
+        this.compareCompanyName[index] += e2c.stockCode
+      }
+    })
+    this.compareCompanyName[index] += ")"
   }
 
   prepareDataForExchange(exchangeIndex : number) {
@@ -115,7 +130,10 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     )
   }
 
-  prepareDataForDates(exchangeIndex: number) {
+  prepareDataForDates(exchangeIndex: number, companyId?: number, comparingCompany?: boolean) {
+    if(companyId == null) {
+      companyId = this.data.id
+    }
     let newEndDate = new Date(this.endDate[exchangeIndex])
     newEndDate.setDate(this.endDate[exchangeIndex].getDate()+1)
     let date1str = this.startDate[exchangeIndex].getDate() + "." + (this.startDate[exchangeIndex].getMonth()+1) + "." + this.startDate[exchangeIndex].getFullYear()
@@ -123,21 +141,27 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
 
     //get stock price for specific dates
     this.loading = true
-    this.apiService.getPriceList(this.data.id, this.exchanges[exchangeIndex].id, date1str, date2str).subscribe(
+    this.apiService.getPriceList(companyId, this.exchanges[exchangeIndex].id, date1str, date2str).subscribe(
       response => {
         this.loading = false
         if(response && (response as Array<StockPrice>).length>0) {          
-          this.values[exchangeIndex] = (response as Array<StockPrice>).map((obj: StockPrice) => obj.price);
-          this.labels[exchangeIndex] = (response as Array<StockPrice>).map((obj: StockPrice) => {
+          let newValues = (response as Array<StockPrice>).map((obj: StockPrice) => obj.price);
+          let newLabels = (response as Array<StockPrice>).map((obj: StockPrice) => {
             let dt: Date = new Date(obj.timestamp)
             return dt.toLocaleDateString('en', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})
           });
-          this.sendValuesToChart(exchangeIndex, false)
 
-          this.sendValuesToChart(exchangeIndex, true)
-          this.dataAvailable[exchangeIndex] = true
+          if(comparingCompany) {
+            this.compValues[exchangeIndex] = newValues
+          } else {
+            this.values[exchangeIndex] = newValues
+          }          
+          this.labels[exchangeIndex] = newLabels
+
+          this.sendValuesToChart(exchangeIndex, comparingCompany)
+          this.companyAvailable[exchangeIndex] = true
         } else {
-          this.dataAvailable[exchangeIndex] = false
+          this.companyAvailable[exchangeIndex] = false
         }
       },
       error => {
@@ -149,14 +173,29 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
 
   sendValuesToChart(index: number, comparingCompany: boolean) {
     if(this.values.length>0 && this.chartComponents.length>index) {
+      let merge = this.editorForm.get('merge').value
       this.chartComponents.forEach((o, i) => {        
-        if(o.companyName == this.companyNames[index] && ((o.compareCompany && comparingCompany)||(!o.compareCompany && !comparingCompany))) {
+        if(o.companyName == (comparingCompany && !merge ? this.compareCompanyName[index] : this.companyNames[index]) 
+          && (!merge?((o.compareCompany && comparingCompany)||(!o.compareCompany && !comparingCompany)):!o.compareCompany) ) {
+
           if(o.chart) { o.chart.destroy() }
           this.editorForm.get('startDate').setValue(this.startDate[index])
           this.editorForm.get('endDate').setValue(this.endDate[index])
-          o.labels=this.labels[index]
-          o.values=this.values[index]
-          o.createChart()
+          if(merge) {
+            o.values=this.values[index]
+            o.values2=this.compValues[index] 
+            o.companyName2=this.compareCompanyName[index]
+            o.labels=this.labels[index]
+            o.createMergedChart()
+          } else {
+            if(comparingCompany) {
+              o.values=this.compValues[index]
+            } else {
+              o.values=this.values[index]
+            }
+            o.labels=this.labels[index]
+            o.createChart()
+          }          
         }
       })
     }
@@ -166,10 +205,37 @@ export class ChartViewDialogComponent implements OnInit, AfterViewInit {
     return type+index
   }
 
-  refresh() {
+  refresh() {    
     this.startDate[this.selIndex] = new Date(this.editorForm.get('startDate').value)
     this.endDate[this.selIndex] = new Date(this.editorForm.get('endDate').value)
+    this.chartComponents.forEach((o, i) => {
+      if(o.chart) { o.chart.destroy() }
+    })
     this.prepareDataForDates(this.selIndex)
+
+    this.checkForComparision()
+  }
+
+  noCompCompany() {
+    return false
+  }
+
+  checkForComparision() {
+    this.apiService.getCompanyByName(this.editorForm.get('compareCompany').value).subscribe(
+      response => {
+        let comp = <CompanyModel>response
+        this.compareCompanyId = comp.id
+        this.chartComponents.forEach((o, i) => {
+          if(o.compareCompany) {
+            let exIndex = o.exchangeIndex
+            this.prepareCompareCompanyName(exIndex, comp)
+            o.companyName = this.compareCompanyName[exIndex]
+            this.prepareDataForDates(exIndex, comp.id, true)
+          }
+        })
+      },
+      error => this.editorForm.get('compareCompany').setValue('')
+    )
   }
 
   searching = false

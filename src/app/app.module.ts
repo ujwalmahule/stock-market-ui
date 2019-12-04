@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatPaginatorModule} from '@angular/material/paginator'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 import {ChartsModule} from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -109,6 +110,7 @@ import { CompareCompanyDialogComponent } from './components/compare-company-dial
     MatTooltipModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
     ChartsModule
   ],
   entryComponents: [
